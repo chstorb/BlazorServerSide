@@ -1,0 +1,34 @@
+﻿@page "/weeklyforecast"
+@using Data;
+@inject WeatherForecastService WeatherService
+
+<h3>WeeklyForecast</h3>
+<div class="d-flex">
+    @if (forecasts == null)
+    {
+        <span>No Data</span>
+    }
+    else
+    {
+
+        @*@foreach (var item in Enumerable.Range(1, 5))*@
+        @foreach (var forecast in forecasts)
+        {
+            <WeatherDay 
+                TemperatureC="forecast.TemperatureC" 
+                Summary="@forecast.Summary"
+                DayOfWeek="forecast.Date.DayOfWeek">
+            </WeatherDay>
+        }
+    }
+</div>
+@code {
+    private WeatherForecast[] forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //return base.OnInitializedAsync();
+
+        forecasts = await WeatherService.GetForecastAsync(DateTime.Now);
+    }
+}
