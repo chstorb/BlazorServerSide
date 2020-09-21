@@ -1,0 +1,35 @@
+﻿@page "/converter"
+
+<h3>Converter</h3>
+<label>Inches</label>
+<input @bind-value="Inches" 
+       @bind-value:event="oninput"
+       type="number" />
+<input @bind-value="Centimeters"
+       @bind-value:event="oninput" 
+       type="number" />
+<label>Centimeters</label>
+
+@code {
+    double inches = 1; // default value
+    public double Inches
+    {
+        get => inches;
+        set
+        {
+            centimeters = value * 2.54;
+            inches = value;
+        }
+    }
+
+    double centimeters = 2.54; // default value
+    public double Centimeters
+    {
+        get => centimeters;
+        set
+        {
+            inches = value / 2.54;
+            centimeters = value;
+        }
+    }
+}
